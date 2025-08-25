@@ -1,0 +1,139 @@
+{% extends 'job/base.html' %}
+
+{% block title %}chakanJob.com - Job Applications{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="card border-none">
+    <div class="card-body">
+      <h1 class="card-title mb-4 fw-bold">Job Applications</h1>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead class="table-light">
+            <tr>
+              <th>Job Title</th>
+              <th>Applicants</th>
+              <th>Total Posts</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for post in posts %}
+            <tr>
+              <td>{{ post.job_title }}</td>
+              <td>
+                <button class="btn btn-sm btn-dark" data-bs-toggle="collapse" data-bs-target="#applicants{{ post.id }}" aria-expanded="false" aria-controls="applicants{{ post.id }}">
+                  View Applicants
+                </button>
+              </td>
+              <td>{{ post.applications.count }}</td>
+              <td>
+                <button class="btn btn-outline-info btn-sm" onclick="copyToClipboard('textToCopy{{ post.id }}')">
+                  <i class="bi bi-clipboard"></i> Copy
+                </button>
+                <textarea id="textToCopy{{ post.id }}" style="display:none;" style="display:none; white-space:pre-wrap;">
+
+📢 *{{ post.job_title }}* – 𝗝𝗼𝗯 𝗢𝗽𝗲𝗻𝗶𝗻𝗴
+
+🔧 𝗣𝗼𝘀𝗶𝘁𝗶𝗼𝗻: *{{ post.job_title }}*
+🎓 𝗘𝗱𝘂𝗰𝗮𝘁𝗶𝗼𝗻: *{{ post.min_education }}, ({{ post.course_name }})*
+💼 𝗘𝘅𝗽𝗲𝗿𝗶𝗲𝗻𝗰𝗲: *{{ post.experience }}* ✅
+💰 𝗦𝗮𝗹𝗮𝗿𝘆: ₹*{{ post.min_salary }}* – ₹*{{ post.max_salary }}* / 𝗠𝗼𝗻𝘁𝗵
+🧑‍🤝‍🧑 𝗚𝗲𝗻𝗱𝗲𝗿: *{{ post.gender }}* 
+🏢 𝗙𝗮𝗰𝗶𝗹𝗶𝘁𝗶𝗲𝘀: *{{ post.facilities }}* 🍴
+
+━━━━━━━━━━━━━━━
+🚀 𝗔𝗽𝗽𝗹𝘆 𝗡𝗼𝘄 𝗼𝗿 𝗖𝗮𝗹𝗹 𝗨𝘀  
+👉 www.chakanjob.com{% url 'post_detail' post.pk %}
+
+━━━━━━━━━━━━━━━
+🔎 𝗦𝗲𝗮𝗿𝗰𝗵 𝗕𝗲𝘀𝘁 𝗝𝗼𝗯 𝗶𝗻 𝗣𝘂𝗻𝗲  
+👉 www.chakanjob.com
+
+━━━━━━━━━━━━━━━
+⚡ 𝗛𝘂𝗿𝗿𝘆 𝗨𝗽! 𝗟𝗶𝗺𝗶𝘁𝗲𝗱 𝗢𝗽𝗲𝗻𝗶𝗻𝗴𝘀 – 𝗔𝗽𝗽𝗹𝘆 𝗧𝗼𝗱𝗮𝘆 ⚡
+                </textarea>
+                <!-- <div style="display: none;">
+                  🔥 चाकन जॉब्स – आपकी नौकरी की सही शुरुआत! 🔥
+📢 *{{ post.job_title }}* *Job Opening* 
+🔧 *Position:* {{ post.job_title }}
+🎓 *Education Required:* {{ post.min_education }}, {{ post.course_name }} 
+💼 *Experience:* {{ post.experience }} ✅  
+💰 *Salary:* ₹{{ post.min_salary }} - ₹{{ post.max_salary }}/ month  
+🧑‍🤝‍🧑 *Gender:* {{ post.gender }}  
+🏢 *Facilities:* {{ post.facilities }}
+🚀 *Apply Now!*  
+www.chakanjob.com{% url 'post_detail' post.pk %}
+📲 *Join Whatsapp*:
+https://chat.whatsapp.com/DAgtwWw9FQ9HzYkUPd9Bx8?mode=ems_copy_c
+
+                </div> -->
+                <a href="{% url 'post_detail' post.pk %}" class="btn btn-outline-primary btn-sm">
+                  <i class="bi bi-eye"></i> See
+                </a>
+              </td>
+            </tr>
+            <tr class="collapse" id="applicants{{ post.id }}">
+              <td colspan="3">
+                <div class="p-3 bg-light">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Full Name</th>
+                        <th>Age</th>
+                        <th>Qualification</th>
+              
+                        <th>Mobile Number</th>
+                        <th>Current Address</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for application in post.applications.all %}
+                      <tr>
+                        <td>{{ application.full_name }}</td>
+                        <td>{{ application.age }}</td>
+                        <td>{{ application.qualification }} {{ application.course_name }}</td>
+                        <td>{{ application.mobile_number }}</td>
+                        <td>{{ application.current_address }}</td>
+                      </tr>
+                      {% empty %}
+                      <tr>
+                        <td colspan="6" class="text-center">No applicants yet.</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block jsScript %}
+<script>
+function copyToClipboard(textareaId) {
+  var copyText = document.getElementById(textareaId);
+  copyText.style.display = 'block';  // Make textarea visible
+
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+  navigator.clipboard.writeText(copyText.value)
+    .then(() => {
+      alert("Job details copied, share with your friends. (directly paste on whatsapp)");
+    })
+    .catch(err => {
+      console.error('Error copying text: ', err);
+      alert('Failed to copy job details.');
+    });
+
+  copyText.style.display = 'none';  // Hide textarea again
+}
+</script>
+{% endblock %}
