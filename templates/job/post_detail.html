@@ -201,11 +201,43 @@
 
         <div class="row text-muted mt-4 border-top pt-3 small">
           <div class="col-12 my-2"><h3><strong>Qualification :</strong></h3></div>
-          {% if post.course_name is not None %}
+
+            <div class="col-12 col-md-6">
+              <i class="bi bi-book"></i> <strong> Qualification :</strong> 
+
+              {% for method in post.min_education %}
+                  {% if method == '10th' %}
+                  <!-- Call Button -->
+                    <label>10th,</label>
+                  {% elif method == '12th' %}
+                    <!-- WhatsApp Button -->
+                    <label>12th,</label>
+                  {% elif method == 'iti' %}
+                  <!-- Mail Button -->
+                  <label>ITI,</label>
+                  {% elif method == 'diploma' %}
+                  <label>Diploma,</label>
+                  {% elif method == 'engineering' %}
+                  <label>Engineering,</label>
+                  {% elif method == 'graduation' %}
+                  <label>Graduation,</label>
+                  {% elif method == 'uneducated' %}
+                  <label>Uneducated</label>
+
+                  {% endif %}
+
+              {% endfor %}
+
+
+
+
+            </div>
+    
+
             <div class="col-12 col-md-6">
               <i class="bi bi-book"></i> <strong> Course Name :</strong> {{ post.course_name }}
             </div>
-          {% endif %}
+    
     
             <div class="col-12 col-md-6">
               <i class="bi bi bi-mortarboard"></i> <strong> Experience  :</strong> {{ post.experience }}

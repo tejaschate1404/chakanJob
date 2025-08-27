@@ -102,13 +102,13 @@ class Post(models.Model):
         max_length=255, choices=JOB_TYPES, default='Field Job'
     )
     charges = models.BooleanField(default=False)
-    facilities = models.CharField(max_length=255, default="None",null=False, blank=False)
+    facilities = models.CharField(max_length=255, default='Not specified')
 
     # Second group
     min_education = models.CharField(
         max_length=255,  default='10th'
     )
-    course_name = models.CharField(max_length=255, default="")
+    course_name = models.CharField(max_length=255, default="any")
     experience = models.CharField(
         max_length=255, choices=EXPERIENCE_CHOICES, default='fresher'
     )

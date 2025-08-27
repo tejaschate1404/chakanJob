@@ -204,7 +204,7 @@ def hr_post(request):
             job_type = "Field Job"
         facilities = request.POST.getlist('facility')  # For multiple selections
         if not facilities :
-            facilities = None
+            facilities = "Not Specified"
         charges = 'charges' in request.POST  # Checkbox for charges
 
 
@@ -248,6 +248,7 @@ def hr_post(request):
 def hr_post_candidate(request):
     if request.method == "POST":
         min_education = request.POST.getlist('min_education')
+        print(min_education)
         if not min_education:
             min_education = ['10th']
         course_name = request.POST.get('course_name', '').strip()
@@ -264,6 +265,17 @@ def hr_post_candidate(request):
         whatsapp_number = request.POST.get('whatsapp_number', '').strip()
         email = request.POST.get('email', '').strip()
         terms_accepted = (request.POST.get('terms') == 'on')
+
+        
+        print(f"Min Education: {min_education}")
+        print(f"Course Name: {course_name}")
+        print(f"experiece: {experience}")
+        print(f"manage_through: {manage_through}")
+        print(f"gender: {gender}")
+        print(f"calling_number: {calling_number}")
+        print(f"whatsapp_number: {whatsapp_number}")
+        print(f"email: {email}")
+        print(f"terms_accepted: {terms_accepted}")
 
         request.session['job_data'] = {
             'min_education': min_education,
