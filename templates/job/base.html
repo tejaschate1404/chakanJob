@@ -406,7 +406,7 @@
 {% block jsScript %}
 
 {% endblock %}
-<script>
+<script type="module">
 
   // const btn1 = document.getElementById('toggleBtn1');
   // const collapse1 = document.getElementById('applicants1');
@@ -430,9 +430,122 @@
     setTimeout(function() {
       preloader.style.display = 'none';
       content.classList.remove('hidden');
-    }, 1000); // 2000ms = 2 seconds
+    }, 600); 
   });
    console.log("working 23")
+
+   // push notification 
+          // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+        import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-messaging.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD-f_Hpa3pNoi1BYLOStxEH3ucaDgDmNKY",
+            authDomain: "chakanjob-244cd.firebaseapp.com",
+            projectId: "chakanjob-244cd",
+            storageBucket: "chakanjob-244cd.firebasestorage.app",
+            messagingSenderId: "277378493078",
+            appId: "1:277378493078:web:a3b3de2a8949055ad4f0b7",
+            measurementId: "G-KHLGRL2437"
+        };
+        
+        // You MUST get this key from your Firebase project settings
+        const vapidKey = "BGI83_0_o0qZOi22qd5jINHJa5X2YicWFtE5Ks92UO3yXBHtzylb77QnPJo0lnkSknR2z3OIpgZmtQ9jRmqys5g";
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const messaging = getMessaging(app);
+
+        // Utility to get CSRF token from cookie (for Django)
+        const getCSRF = () => {
+            const match = document.cookie.match(/csrftoken=([^;]+)/);
+            return match ? match[1] : null;
+        };
+
+        // Function to send the token to your Django backend
+        const saveToken = async (token) => {
+            if (!token) {
+                console.warn("Token is null, not saving.");
+                return;
+            }
+            try {
+                const response = await fetch('/save-fcm-token/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCSRF(),
+                    },
+                    body: JSON.stringify({ token })
+                });
+                const data = await response.json();
+                console.log('Token saved:', data);
+                if (response.ok) {
+                    document.getElementById('status-message').textContent = 'Notifications enabled!';
+                } else {
+                    document.getElementById('status-message').textContent = 'Failed to save token.';
+                }
+            } catch (err) {
+                console.error('Save failed:', err);
+                document.getElementById('status-message').textContent = 'An error occurred.';
+            }
+        };
+
+        // Function to request permission and get the token
+        const requestAndGetToken = async (registration) => {
+            try {
+                const currentToken = await getToken(messaging, { vapidKey, serviceWorkerRegistration: registration });
+                if (currentToken) {
+                    console.log('FCM Token:', currentToken);
+                    await saveToken(currentToken);
+                } else {
+                    console.warn('No registration token available. Request permission to generate one.');
+                }
+            } catch (err) {
+                console.error('An error occurred while retrieving token. ', err);
+                document.getElementById('status-message').textContent = 'Error getting token.';
+            }
+        };
+
+        // Handle incoming messages while the app is in the foreground
+        onMessage(messaging, (payload) => {
+            console.log('Message received. ', payload);
+            const { title, body } = payload.notification;
+            // Display an alert for foreground messages
+            alert(`${title}: ${body}`);
+        });
+
+        // Main logic for Service Worker registration and permission flow
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/firebase-messaging-sw.js')
+                .then((registration) => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                    if (Notification.permission === 'granted') {
+                        requestAndGetToken(registration);
+                    } else if (Notification.permission !== 'denied') {
+                        const enableBtn = document.getElementById('enable-notifications');
+                        enableBtn.style.display = 'block';
+                        enableBtn.addEventListener('click', () => {
+                            Notification.requestPermission().then(permission => {
+                                if (permission === 'granted') {
+                                    requestAndGetToken(registration);
+                                    enableBtn.style.display = 'none';
+                                } else {
+                                    console.warn("Permission denied by user.");
+                                    enableBtn.style.display = 'none';
+                                    document.getElementById('status-message').textContent = 'Notifications denied by user.';
+                                }
+                            });
+                        });
+                    } else {
+                        console.warn("Notifications denied earlier by user.");
+                        document.getElementById('status-message').textContent = 'Notifications are blocked. Please enable them in your browser settings.';
+                    }
+                })
+                .catch(err => console.error("Service Worker registration failed:", err));
+        } else {
+            document.getElementById('status-message').textContent = 'Your browser does not support Service Workers.';
+        }
 </script>
 </body>
 </html>

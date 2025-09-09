@@ -33,3 +33,18 @@ class Review(models.Model):
 
     def __str__(self):
         return f"self.message"
+
+
+
+
+
+class FCMToken(models.Model):
+    """Model to store FCM registration tokens."""
+    token = models.CharField(max_length=255, unique=True, db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.token
+
+    class Meta:
+        ordering = ['-created_at']

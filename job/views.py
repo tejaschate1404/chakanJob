@@ -8,6 +8,11 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import CreateView
 from django.contrib import messages
 from .models import Applications
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import FCMToken
+
 #from .models import Application
 
 # Create your views here.
@@ -53,17 +58,50 @@ def post_detail(request, pk):
     if isinstance(post.shifts, str):
         post.shifts = post.shifts.strip("[]").replace("'", "").split(',')
     post.shifts = [item.strip() for item in post.shifts]
-    print(post.shifts)
+    # print(post.shifts)
 
     if isinstance(post.facilities, str):
         post.facilities = post.facilities.strip("[]").replace("'", "").split(',')
     post.facilities = [item.strip() for item in post.facilities]
     print(post.facilities)
-    print(post.job_title)
-    print(post.experience)
+    # print(post.job_title)
+    # print(post.experience)
 
+    title_words = post.job_title.split()
+    query = Q()
+    for word in set(title_words):
+        query |= Q(job_title__icontains=word)
+    related_jobs = Post.objects.filter(query).exclude(pk=post.pk)[:25]
 
-    return render(request, 'job/post_detail.html', {'post': post})
+        # Check if any related jobs were found
+    if related_jobs.exists():
+        # If related jobs exist, use that queryset
+        related = related_jobs
+    else:
+        # If no related jobs are found, get all jobs instead
+        related = Post.objects.all().exclude(pk=post.pk)[:5]
+
+    # --- Clean fields for each related job ---
+    for job in related:
+        if isinstance(job.manage_through, str):
+            job.manage_through = job.manage_through.strip("[]").replace("'", "").split(',')
+        job.manage_through = [item.strip() for item in job.manage_through]
+
+        if isinstance(job.min_education, str):
+            job.min_education = job.min_education.strip("[]").replace("'", "").split(',')
+        job.min_education = [item.strip() for item in job.min_education]
+
+        if isinstance(job.shifts, str):
+            job.shifts = job.shifts.strip("[]").replace("'", "").split(',')
+        job.shifts = [item.strip() for item in job.shifts]
+
+        if isinstance(job.facilities, str):
+            job.facilities = job.facilities.strip("[]").replace("'", "").split(',')
+        job.facilities = [item.strip() for item in job.facilities]
+   
+
+    return render(request, 'job/post_detail.html', {'post': post,
+    'related_jobs': related,})
 
 
 
@@ -194,3 +232,20 @@ def application_success(request):
     return render(request, 'job/application_success.html')
 
 
+
+
+
+# @csrf_exempt
+# def save_fcm_token(request):
+#     """Receives and saves the FCM token from the client."""
+#     if request.method == 'POST':
+#         try:
+#             data = json.loads(request.body)
+#             token = data.get('token')
+#             if token:
+#                 FCMToken.objects.get_or_create(token=token)
+#                 return JsonResponse({"status": "success", "message": "Token saved."})
+#             return JsonResponse({"status": "error", "message": "No token provided."}, status=400)
+#         except json.JSONDecodeError:
+#             return JsonResponse({"status": "error", "message": "Invalid JSON."}, status=400)
+#     return JsonResponse({"status": "error", "message": "Invalid request method."}, status=405)
