@@ -1,6 +1,12 @@
 {% extends 'job/base.html' %}
 
-{% block title %}Job - Find Best Jobs {% endblock %}
+{% block title %} 
+{{ post.job_title }} job vacancy in {{ post.area }} Pune  ||  Find Best Job on ChakanJob 
+{% endblock %}
+
+{% block meta_description %}
+  Apply now for {{ post.job_title }} at {{ post.company }} in {{ post.area }} | ChakanJob — see salary, requirements & apply online today.
+{% endblock %}
 
 {% block StyleOld %}
 <style>
@@ -176,7 +182,7 @@
           <img src="{% static 'img2/logo3.jpeg' %}" 
               alt="Company Logo" class="company-logo">
           <div class="ms-3 flex-grow-1">
-            <h5 class="mb-1 fw-bold text-dark">{{ post.job_title }}</h5>
+            <h5 class="mb-1 fw-bold text-dark">{{ post.job_title }} Vacancy available in {{ post.area }}</h5>
             <small class="text-muted">{{ post.company_name }}</small>
           </div>
           <i class="bi bi-arrow-right-circle fs-4 text-warning"></i>
@@ -472,7 +478,7 @@
                       <i class="bi bi-envelope"></i> EMail
                     </a>
                       {% elif method == 'apply' %}
-                      <a href="/" class="btn btn-outline-warning w-auto">
+                      <a href="{% url 'apply' post.id %}" class="btn btn-outline-warning w-auto">
                         <i class="bi bi-file-earmark-plus"></i> Apply
                       </a>
                         {% endif %}
@@ -497,8 +503,6 @@
         <!-- Carosel End Related Jobs -->
 
 
-
-
     <!-- Google Ads -->
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9155980795220429"
           crossorigin="anonymous"></script>
@@ -513,6 +517,7 @@
           (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
 
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9155980795220429"
         crossorigin="anonymous"></script>
     <!-- First Add -->
@@ -526,13 +531,10 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
     <!-- Google Adesense end -->
->>>>>>> development
-
-
 
 
         <div class="row text-muted mt-4 border-top pt-3 small mb-5">
-          <div class="col-12 my-2"><h3><strong>Disclaimer :</strong></h3></div>
+          <div class="col-12 my-2"><h3><strong>Disclaimer  :</strong></h3></div>
             <div class="col-12 mb-2">
               <i class="bi bi-building"></i></i><strong>  We’re not responsible for scams—especially from people posing as recruiters and asking for money. Please stay vigilant. Anyone found doing this will be banned.</strong>
             </div>

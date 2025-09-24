@@ -4,15 +4,23 @@
   {% load static %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Best Portal For Jobs...</title>
+  <title>  
+  {% block title %}
+  {% endblock %}
+  </title>
+
+  <meta name="description" content="{% block meta_description %} {% endblock %}">
   <link rel="icon" type="image/x-icon" href="{% static 'img2/logo3.jpeg' %}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 
-  <!-- Google Adesense -->
- 
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9155980795220429"
+     crossorigin="anonymous"></script>
+
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-MHDEEYBC61"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -21,10 +29,6 @@
 
     gtag('config', 'G-MHDEEYBC61');
   </script>
-
-  <!-- Google Adesense Link -->
-   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9155980795220429"
-     crossorigin="anonymous"></script>
 
   <style>
 
@@ -208,10 +212,22 @@
 }
 
 
-    * { box-sizing: border-box; }
+* { box-sizing: border-box; }.fixed-bottom .btn-link {
+  padding: 0.5rem; /* larger tap area */
+}
+
+.fixed-bottom .btn-link:hover {
+  background-color: rgba(0,0,0,0.05);
+  border-radius: 0.25rem;
+}
+/* Apply a lighter font weight to the icons */
+.fixed-bottom .btn-link i {
+  font-weight: lighter; /* Makes the icons less bold */
+}
 
 
-  </style>
+
+</style>
 
 {% block StyleOld %}
 
@@ -227,7 +243,7 @@
   <div class="container-fluid px-2">
 
     <!-- Logo -->
-    <a class="navbar-brand m-0 p-2 px-4" href="#">
+    <a class="navbar-brand m-0" href="#">
       <img src="{% static 'img2/logo1.png' %}" alt="Logo">
     </a>
 
@@ -239,7 +255,7 @@
       </button>
 
       <!-- Hamburger Menu -->
-      <button class="btn menuBtn p-0 me-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+      <button class="btn menuBtn p-0 " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
         <img src="https://getlokalapp.com/_next/image?url=%2Fassets%2Fdesktop_menu.webp&w=1920&q=75" width="35" height="35" alt="menu">
       </button>
 
@@ -415,6 +431,45 @@
 
 {% endblock %}
 
+
+<!-- Footer  -->
+<div class="d-block d-md-none fixed-bottom bg-white border-top shadow-sm">
+  <div class="container-fluid p-2">
+    <div class="row gx-2">
+      <!-- WhatsApp -->
+      <div class="col text-center">
+        <a href="https://whatsapp.com/channel/0029VbBUdgM9RZAWKxY8iM3r" class="btn btn-link p-0 text-success" title="WhatsApp">
+          <i class="bi bi-whatsapp fs-3"></i>
+        </a>
+      </div>
+
+      <!-- Instagram -->
+      <div class="col text-center">
+        <a href="https://www.instagram.com/chakanjob01/" class="btn btn-link p-0 text-danger" title="Instagram">
+          <i class="bi bi-instagram fs-3"></i>
+        </a>
+      </div>
+
+
+      <!--  ============  Telegram ==================================================== -->
+      <div class="col text-center">
+        <a href="https://t.me/chakanjob_com" class="btn btn-link p-0 text-info" title="Telegram">
+          <i class="bi bi-telegram fs-3"></i>
+        </a>
+      </div>
+
+
+      <!-- Profile / User -->
+      <div class="col text-center">
+        <a href="" class="btn btn-link p-0 text-primary" title="Profile">
+          <i class="bi bi-person-circle fs-3"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  ==================== Footer ======================================================= -->
 
 
 

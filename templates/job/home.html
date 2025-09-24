@@ -1,6 +1,12 @@
 {% extends 'job/base.html' %}
 
-{% block title %}Job - Find Best Jobs {% endblock %}
+{% block title %}
+chakanjob.com || Find Job in Chakan, Pune, Bhosari, etc.... 
+{% endblock %}
+
+{% block meta_description %}
+  Browse the best job openings in Chakan on ChakanJob — filter by role, salary, experience & apply directly.
+{% endblock %}
 
 {% block StyleOld %}
 <style>
@@ -213,7 +219,7 @@
               </a>
                 {% elif method == 'apply' %}
                 <!-- Apply Button -->
-                <a href="/" class="btn btn-outline-warning w-auto">
+                <a href="{% url 'apply' post.id %}" class="btn btn-outline-warning w-auto">
                   <i class="bi bi-file-earmark-plus"></i> Apply
                 </a>
                   {% endif %}
@@ -318,7 +324,7 @@
   </a>
      {% elif method == 'apply' %}
     <!-- Apply Button -->
-    <a href="/jobs/apply" class="btn btn-outline-warning w-auto">
+    <a href="{% url 'apply' post.id %}" class="btn btn-outline-warning w-auto">
       <i class="bi bi-file-earmark-plus"></i> Apply
     </a>
       {% endif %}

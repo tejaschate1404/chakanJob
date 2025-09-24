@@ -1,6 +1,9 @@
 {% extends 'job/base.html' %}
 
-{% block title %}Job - Find Best Jobs {% endblock %}
+{% block title %}Search Best Jobs in Chakan | ChakanJob | Tejas Chate  {% endblock %}
+{% block meta_description %}
+  Explore top job vacancies in Chakan via ChakanJob. Search and apply for roles at {{ post.company }} in {{ post.area }} today.
+{% endblock %}
 
 {% block StyleOld %}
 <style>
@@ -175,7 +178,7 @@
   </a>
      {% elif method == 'apply' %}
     <!-- Apply Button -->
-    <a href="/jobs/apply" class="btn btn-outline-warning w-auto">
+    <a href="{% url 'apply' post.id %}" class="btn btn-outline-warning w-auto">
       <i class="bi bi-file-earmark-plus"></i> Apply
     </a>
       {% endif %}
