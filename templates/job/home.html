@@ -304,59 +304,55 @@ chakanjob.com || Find Job in Chakan, Pune, Bhosari, etc....
       <!-- Buttons -->
 
 
-      
-<div class="card-footer  border-0 d-flex flex-nowrap gap-2">
-{% for method in post.manage_through %}
-  {% if method == 'calls' %}
-  <!-- Call Button -->
-  <a href="tel:+91{{ post.calling_number }}" class="btn btn-outline-success w-auto">
-    <i class="bi bi-telephone"></i> Call
-  </a>
-     {% elif method == 'whatsapp' %}
-      <!-- WhatsApp Button -->
-      <a href="https://wa.me/{{ post.whatsapp_number }}" class="btn btn-outline-success w-auto">
-        <i class="bi bi-whatsapp"></i> WhatsApp
+          
+    <div class="card-footer  border-0 d-flex flex-nowrap gap-2">
+    {% for method in post.manage_through %}
+      {% if method == 'calls' %}
+      <!-- Call Button -->
+      <a href="tel:+91{{ post.calling_number }}" class="btn btn-outline-success w-auto">
+        <i class="bi bi-telephone"></i> Call
       </a>
-     {% elif method == 'email' %}
-  <!-- Mail Button -->
-  <a href="mailto:{{ post.email }}" class="btn btn-outline-primary w-auto">
-    <i class="bi bi-envelope"></i> EMail
-  </a>
-     {% elif method == 'apply' %}
-    <!-- Apply Button -->
-    <a href="{% url 'apply' post.id %}" class="btn btn-outline-warning w-auto">
-      <i class="bi bi-file-earmark-plus"></i> Apply
-    </a>
+        {% elif method == 'whatsapp' %}
+          <!-- WhatsApp Button -->
+        <a href="https://wa.me/{{ post.whatsapp_number }}?text=Hello%20Sir%2C%20am%20interested%20as%20{{ job_title }}%20in%20your%20company%20and%20am%20reach%20you%20from%20www.chakanjob.com" class="btn btn-outline-success w-auto">
+          <i class="bi bi-whatsapp"></i> WhatsApp
+        </a>
+        {% elif method == 'email' %}
+      <!-- Mail Button -->
+      <a href="mailto:{{ post.email }}" class="btn btn-outline-primary w-auto">
+        <i class="bi bi-envelope"></i> EMail
+      </a>
+        {% elif method == 'apply' %}
+        <!-- Apply Button -->
+        <a href="{% url 'apply' post.id %}" class="btn btn-outline-warning w-auto">
+          <i class="bi bi-file-earmark-plus"></i> Apply
+        </a>
       {% endif %}
-  {% endfor %}
+      {% endfor %}
 
-  <!-- View Button (floats right) -->
-  <a href="{% url 'post_detail' post.pk %}" class="btn btn-outline-info ms-auto w-auto">
-    <i class="bi bi-eye"></i> View
-  </a>
-</div>
-
-
-
-
-
-
-
+      <!-- View Button (floats right) -->
+      <a href="{% url 'post_detail' post.pk %}" class="btn btn-outline-info ms-auto w-auto">
+        <i class="bi bi-eye"></i> View
+      </a>
+    </div>
     </div>
 
-      {% if forloop.counter|divisibleby:5 %}
-       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9155980795220429"
-            crossorigin="anonymous"></script>
-        <!-- first page -->
-        <ins class="adsbygoogle"
-            style="display:block"
-            data-ad-client="ca-pub-9155980795220429"
-            data-ad-slot="1681154151"
-            data-ad-format="auto"
-            data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+      {% if forloop.counter|divisibleby:4 %}
+        <div class="row">
+            <div class="col-12 text-center">
+              <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9155980795220429"
+                  crossorigin="anonymous"></script>
+              <ins class="adsbygoogle"
+                  style="display:block"
+                  data-ad-client="ca-pub-9155980795220429"
+                  data-ad-slot="4690460873"
+                  data-ad-format="auto"
+                  data-full-width-responsive="true"></ins>
+              <script>
+                  (adsbygoogle = window.adsbygoogle || []).push({});
+              </script>
+            </div>
+          </div>
       {% endif %}
 
     {% endfor %}
