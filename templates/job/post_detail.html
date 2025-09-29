@@ -176,13 +176,6 @@
 {% endblock %}
 
 
-{% block styleDetails %}
-.social-media {
-    display: none !important;
-  }
-{% endblock %}
-
-
 {% block content %}
 {% load static %}
 
@@ -372,6 +365,38 @@
                   {% endif %}
 
               {% endfor %}
+            </div>
+
+            <div class="col-12">
+               <div class="row text-muted mt-4 border-top pt-3 small">
+                  <div class="col-12 my-2">
+                      <h3><strong>Call & Apply For the Job : :</strong></h3>
+                  </div>
+                  <div class="col-12">
+                      <div class="d-flex justify-content-left gap-4">
+
+                          {% for method in post.manage_through %}
+                            {% if method == 'calls' %}  
+                          <a href="tel:+91{{ post.calling_number }}" class="text-primary p-2" title="Call Now">
+                              <i class="bi bi-telephone-fill fs-2"></i> </a>
+                            {% elif method == 'whatsapp' %}
+                          <a href="https://wa.me/{{ post.whatsapp_number }}?text=Hello%2C%20I%20am%20interested%20in%20the%20{{ post.job_title }}%20job%20I%20saw%20on%20www.chakanjob.com" class="text-success p-2" title="WhatsApp Inquiry">
+                              <i class="bi bi-whatsapp fs-2"></i>
+                          </a>
+                          {% elif method == 'email' %}
+                          <a href="mailto:{{ post.email }}" target="_blank" class="text-danger p-2" title="Email CV">
+                              <i class="bi bi-envelope-fill fs-2"></i> </a>
+                            {% elif method == 'apply' %}
+                          <a href="{% url 'apply' post.id %}" target="_blank" class="text-info p-2" title="Apply Online">
+                            <i class="bi bi-box-arrow-in-right fs-2"></i> 
+                          </a>
+                          {% endif %}
+                          {% endfor %}
+                          
+
+                          </div>
+                  </div>
+              </div>
             </div>
            
         </div>
@@ -601,7 +626,7 @@
     </div>
 
       {% if forloop.counter|divisibleby:4 %}
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-12 text-center">
               <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9155980795220429"
                   crossorigin="anonymous"></script>
@@ -615,7 +640,7 @@
                   (adsbygoogle = window.adsbygoogle || []).push({});
               </script>
             </div>
-          </div>
+          </div> -->
       {% endif %}
 
     {% endfor %}
@@ -645,8 +670,8 @@
     </div>
   </div>
 
-   <div class="row">
-    <div class="col-12 text-center">
+   <!-- <div class="row">
+    <div class="col-12 text-center ">
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9155980795220429"
           crossorigin="anonymous"></script>
       <ins class="adsbygoogle"
@@ -659,7 +684,7 @@
           (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
     </div>
-  </div>
+  </div> -->
     <!-- Google Adesense end -->
 
 
@@ -672,36 +697,51 @@
         </div>
       <!-- Buttons -->
   </div>    
+
+
+  <!-- Footer -->
   <div class="card-footer bg-light border-0 d-flex flex-nowrap gap-2 container p-3 fixed-bottom shadow details-footer" style="z-index:20;">
+
+      <div class="col text-center">
+        <a href="https://www.chakanjob.com" class="btn btn-link p-0 text-success py-1" title="Home">
+          <img src="/static/img2/logo3.jpeg" alt="Chakan Job Home" style="width: 28px; height: 28px; vertical-align: middle; border-radius: 50%;">
+        </a>
+      </div>
+    
     {% for method in post.manage_through %}
+
+
       {% if method == 'calls' %}
       <!-- Call Button -->
-      <a href="tel:+91{{ post.calling_number }}" class="btn btn-outline-success w-auto set-width">
-        <i class="bi bi-telephone"></i> Call
-      </a>
+      <div class="col text-center">
+        <a href="https://wa.me/{{ post.whatsapp_number }}" class="btn btn-link p-0 text-primary" title="call">
+          <i class="bi bi-telephone-fill fs-3"></i>
+        </a>
+      </div>
         {% elif method == 'whatsapp' %}
           <!-- WhatsApp Button -->
-          <a href="https://wa.me/{{ post.whatsapp_number }}" class="btn btn-outline-success w-auto set-width">
-            <i class="bi bi-whatsapp"></i> WhatsApp
-          </a>
+         <div class="col text-center">
+            <a href="https://wa.me/{{ post.whatsapp_number }}" class="btn btn-link p-0 text-success" title="whatsapp">
+              <i class="bi bi-whatsapp fs-3"></i>
+            </a>
+      </div>
         {% elif method == 'email' %}
       <!-- Mail Button -->
-      <a href="mailto:{{ post.email }}" class="btn btn-outline-primary w-auto set-width">
-        <i class="bi bi-envelope"></i> EMail
-      </a>
+        <div class="col text-center">
+          <a href="mailto:{{ post.email }}" class="btn btn-link p-0 text-info" title="Gmail">
+            <i class="bi bi-envelope-fill fs-3"></i>
+          </a>
+        </div>
         {% elif method == 'apply' %}
         <!-- Apply Button -->
-        <a href="{% url 'apply' post.id %}" class="btn btn-outline-warning w-auto set-width">
-          <i class="bi bi-file-earmark-plus"></i> Apply
-        </a>
+          <div class="col text-center">
+            <a href="{% url 'apply' post.id %}" class="btn btn-link p-0 text-info" title="Apply">
+              <i class="bi bi-box-arrow-in-right fs-3"></i>
+            </a>
+          </div>
           {% endif %}
       {% endfor %}
-
-      <!-- View Button (floats right) -->
-      <a href="{% url 'home'  %}" class="btn btn-outline-info ms-auto w-auto set-width">
-        <i class="bi bi-eye"></i> Mini View
-      </a>
-    </div>
+<!--  ==================== Footer ======================================================= -->
 
 {% endblock %}
 {% block jsScript %}

@@ -102,24 +102,24 @@ def post_detail(request, pk):
 
 
 
-     # show all posts on 
-    all_posts = Post.objects.all()
-    for post in all_posts:
-        # Ensure manage_through is a list
-        if isinstance(post.manage_through, str):
-            post.manage_through = post.manage_through.strip("[]").replace("'", "").split(',')
-        # Strip any leading/trailing whitespace from each item
-        post.manage_through = [item.strip() for item in post.manage_through]
+    #  # show all posts on 
+    # all_posts = Post.objects.all()
+    # for post in all_posts:
+    #     # Ensure manage_through is a list
+    #     if isinstance(post.manage_through, str):
+    #         post.manage_through = post.manage_through.strip("[]").replace("'", "").split(',')
+    #     # Strip any leading/trailing whitespace from each item
+    #     post.manage_through = [item.strip() for item in post.manage_through]
 
-        # minimum education
-        if isinstance(post.min_education, str):
-            post.min_education = post.min_education.strip("[]").replace("'", "").split(',')
-        post.min_education = [item.strip() for item in post.min_education]
-        # print(post.min_education)
-        # print(post.manage_through)
+    #     # minimum education
+    #     if isinstance(post.min_education, str):
+    #         post.min_education = post.min_education.strip("[]").replace("'", "").split(',')
+    #     post.min_education = [item.strip() for item in post.min_education]
+    #     # print(post.min_education)
+    #     # print(post.manage_through)
 
     return render(request, 'job/post_detail.html', {'post': post,
-    'related_jobs': related,'all_posts':all_posts})
+    'related_jobs': related})
 
 
 
