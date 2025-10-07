@@ -71,14 +71,14 @@
                   <i class="bi bi-clipboard"></i>Hin-Eng
                 </button>
                 <textarea id="textToCopy{{ post.id }}" style="display:none;" style="display:none; white-space:pre-wrap;">
-📢 *{{ post.company_name }}* – *मैं* 𝗝𝗼𝗯 𝗢𝗽𝗲𝗻𝗶𝗻𝗴
+📢 *{{ post.company_name }}*, *{{ post.area }}* – *मैं* 𝗝𝗼𝗯 𝗢𝗽𝗲𝗻𝗶𝗻𝗴
 
 *चाकण, रांजणगाव, पुणे, हिंजवाड़ी, भोसरी की वैकेंसी एक मिनट में आपके मोबाइल पर पाएँ और तुरंत HR कॉल को करें* | *www.chakanjob.com पर*  ||
 
 🔧 𝗣𝗼𝘀𝗶𝘁𝗶𝗼𝗻: *{{ post.job_title }}*
 🎓 𝗘𝗱𝘂𝗰𝗮𝘁𝗶𝗼𝗻: *{{ post.min_education }}, ({{ post.course_name }})*
 💼 𝗘𝘅𝗽𝗲𝗿𝗶𝗲𝗻𝗰𝗲: *{{ post.experience }}* ✅
-💰 𝗦𝗮𝗹𝗮𝗿𝘆: ₹*{{ post.min_salary }}* – ₹*{{ post.max_salary }}* / 𝗠𝗼𝗻𝘁𝗵
+💰 𝗦𝗮𝗹𝗮𝗿𝘆: ₹ *{{ post.min_salary }}* – ₹ *{{ post.max_salary }}* / 𝗠𝗼𝗻𝘁𝗵
 🧑‍🤝‍🧑 𝗚𝗲𝗻𝗱𝗲𝗿: *{{ post.gender }}* 
 🏢 𝗙𝗮𝗰𝗶𝗹𝗶𝘁𝗶𝗲𝘀: *{{ post.facilities }}* 🍴
 
@@ -105,20 +105,20 @@ https://www.whatsapp.com/channel/0029VbBUdgM9RZAWKxY8iM3r
   </button>
   <textarea id="marathiText{{ post.id }}"
             style="display: none; white-space: pre-wrap;">
-📢 *{{ post.company_name }}* – *मध्ये* 𝗝𝗼𝗯 𝗢𝗽𝗲𝗻𝗶𝗻𝗴
+📢 *{{ post.company_name }}*, *{{ post.area }}* – *मध्ये* 𝗝𝗼𝗯 𝗢𝗽𝗲𝗻𝗶𝗻𝗴
 
 *चाकण, रांजणगाव, पुणे, हिंजवाड़ी, भोसरी येथे एक मिनिटात नोकरी — तुमच्या मोबाईलवर आणि लगेच HR ला कॉल करा* | *www.chakanjob.com वर* ||
 
-🔧 𝗣𝗼𝘀𝗶𝘁𝗶𝗼𝗻: *Photographer*
-🎓 *शिक्षण*: *['10th'], (Information Technology Background)*
-💼 *अनुभव*: *3-5 years* ✅
-💰 *पगार*: ₹*15000* – ₹*18000* / महिना
-🧑‍🤝‍🧑 *लिंग*: *female*
-🏢 *सोयी-सुविधा*: *['canteen']* 🍴
+🔧 𝗣𝗼𝘀𝗶𝘁𝗶𝗼𝗻: *{{ post.job_title }}*
+🎓 *शिक्षण*: *{{ post.min_education }}*, *({{ post.course_name }})*
+💼 *अनुभव*: *{{ post.experience }}* ✅
+💰 *पगार*: ₹ *{{ post.min_salary }}* – ₹ *{{ post.min_salary }}* / महिना
+🧑‍🤝‍🧑 *लिंग*: *{{ post.gender }}*
+🏢 *सोयी-सुविधा*: *{{ post.facilities }}* 🍴
 
  ━━━━━━━━━━━━━━━
 🚀 𝗔𝗽𝗽𝗹𝘆 𝗡𝗼𝘄 किंवा 𝗖𝗮𝗹𝗹 *करा*  
-👉 www.chakanjob.com/post/1/
+👉 www.chakanjob.com{% url 'post_detail' post.pk %}
 
 ━━━━━━━━━━━━━━━
 🔎 *पुण्यात सर्वोत्तम नोकरी शोधा*  
