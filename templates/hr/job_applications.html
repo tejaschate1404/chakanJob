@@ -3,37 +3,77 @@
 {% block title %}chakanJob.com - Job Applications{% endblock %}
 
 {% block content %}
-<div class="container my-5">
-  <div class="card border-none">
+<div class="container mt-3 mb-5 ">
+  <div class=" border-none">
     <div class="card-body">
-      <h1 class="card-title mb-4 fw-bold">Job Applications</h1>
+      <h1 class="card-title mb-4 fw-bold text-center">Job Applications</h1>
       <div class="table-responsive">
         <table class="table table-striped">
           <thead class="table-light">
             <tr>
               <th>Job Title</th>
               <th>Applicants</th>
-              <th>Total Posts</th>
-              <th>Actions</th>
+              <th>Action</th>
+              <th>JD Copy</th>
             </tr>
           </thead>
           <tbody>
-            {% for post in posts %}
+            {% for post in posts reversed %}
             <tr>
-              <td>{{ post.job_title }}</td>
-              <td>
-                <button class="btn btn-sm btn-dark" data-bs-toggle="collapse" data-bs-target="#applicants{{ post.id }}" aria-expanded="false" aria-controls="applicants{{ post.id }}">
-                  View Applicants
-                </button>
+              <td> 
+                <a href="{% url 'post_detail' post.pk %}" class="text-body text-decoration-none"
+     style="cursor: pointer;">
+                {{ post.job_title }}
+                </a>
               </td>
-              <td>{{ post.applications.count }}</td>
               <td>
+                <a href="{% url 'job_applicants' post.pk %}" class="btn btn-sm btn-dark">
+                  Applicants ({{ post.applications.count }})
+                </a>
+            </td>
+
+
+              <!-- Action Button Start -->
+                <td>
+  
+              <!-- See Applicants button (icon only) -->
+              <a href="{% url 'post_detail' post.pk %}" 
+                class="btn btn-sm mb-1"
+                title="See Applicants"
+                style="font-size: 1.2rem; font-weight: bold; color: #0d6efd; border: 1px solid #0d6efd;">
+                <i class="bi bi-eye"></i>
+              </a>
+
+                <!-- Delete button (icon only) -->
+                <form action="{% url 'delete_post' post.pk %}" method="post" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" 
+                          class="btn btn-sm btn-outline-danger" 
+                          title="Delete Post"
+                          style="font-size: 1.2rem; font-weight: bold; color: #e91d0a; border: 1px solid #d14836;""
+                          onclick="return confirm('Are you sure you want to delete this post?');">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </form>
+              </td>
+
+              <!-- Action Button End -->
+
+
+
+
+
+
+               <!-- JD buttons Start Here -->
+              <td>
+              
                 <button class="btn btn-outline-info btn-sm" onclick="copyToClipboard('textToCopy{{ post.id }}')">
-                  <i class="bi bi-clipboard"></i> Copy
+                  <i class="bi bi-clipboard"></i>Hin-Eng
                 </button>
                 <textarea id="textToCopy{{ post.id }}" style="display:none;" style="display:none; white-space:pre-wrap;">
+📢 *{{ post.company_name }}* – *मैं* 𝗝𝗼𝗯 𝗢𝗽𝗲𝗻𝗶𝗻𝗴
 
-📢 *{{ post.job_title }}* – 𝗝𝗼𝗯 𝗢𝗽𝗲𝗻𝗶𝗻𝗴
+*चाकण, रांजणगाव, पुणे, हिंजवाड़ी, भोसरी की वैकेंसी एक मिनट में आपके मोबाइल पर पाएँ और तुरंत HR कॉल को करें* | *www.chakanjob.com पर*  ||
 
 🔧 𝗣𝗼𝘀𝗶𝘁𝗶𝗼𝗻: *{{ post.job_title }}*
 🎓 𝗘𝗱𝘂𝗰𝗮𝘁𝗶𝗼𝗻: *{{ post.min_education }}, ({{ post.course_name }})*
@@ -50,60 +90,49 @@
 🔎 𝗦𝗲𝗮𝗿𝗰𝗵 𝗕𝗲𝘀𝘁 𝗝𝗼𝗯 𝗶𝗻 𝗣𝘂𝗻𝗲  
 👉 www.chakanjob.com
 
-━━━━━━━━━━━━━━━
-⚡ 𝗛𝘂𝗿𝗿𝘆 𝗨𝗽! 𝗟𝗶𝗺𝗶𝘁𝗲𝗱 𝗢𝗽𝗲𝗻𝗶𝗻𝗴𝘀 – 𝗔𝗽𝗽𝗹𝘆 𝗧𝗼𝗱𝗮𝘆 ⚡
-                </textarea>
-                <!-- <div style="display: none;">
-                  🔥 चाकन जॉब्स – आपकी नौकरी की सही शुरुआत! 🔥
-📢 *{{ post.job_title }}* *Job Opening* 
-🔧 *Position:* {{ post.job_title }}
-🎓 *Education Required:* {{ post.min_education }}, {{ post.course_name }} 
-💼 *Experience:* {{ post.experience }} ✅  
-💰 *Salary:* ₹{{ post.min_salary }} - ₹{{ post.max_salary }}/ month  
-🧑‍🤝‍🧑 *Gender:* {{ post.gender }}  
-🏢 *Facilities:* {{ post.facilities }}
-🚀 *Apply Now!*  
-www.chakanjob.com{% url 'post_detail' post.pk %}
-📲 *Join Whatsapp*:
-https://chat.whatsapp.com/DAgtwWw9FQ9HzYkUPd9Bx8?mode=ems_copy_c
+🔎 *Join Whatsapp Channel* :
+https://www.whatsapp.com/channel/0029VbBUdgM9RZAWKxY8iM3r  
 
-                </div> -->
-                <a href="{% url 'post_detail' post.pk %}" class="btn btn-outline-primary btn-sm">
-                  <i class="bi bi-eye"></i> See
-                </a>
-              </td>
-            </tr>
-            <tr class="collapse" id="applicants{{ post.id }}">
-              <td colspan="3">
-                <div class="p-3 bg-light">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Full Name</th>
-                        <th>Age</th>
-                        <th>Qualification</th>
-              
-                        <th>Mobile Number</th>
-                        <th>Current Address</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {% for application in post.applications.all %}
-                      <tr>
-                        <td>{{ application.full_name }}</td>
-                        <td>{{ application.age }}</td>
-                        <td>{{ application.qualification }} {{ application.course_name }}</td>
-                        <td>{{ application.mobile_number }}</td>
-                        <td>{{ application.current_address }}</td>
-                      </tr>
-                      {% empty %}
-                      <tr>
-                        <td colspan="6" class="text-center">No applicants yet.</td>
-                      </tr>
-                      {% endfor %}
-                    </tbody>
-                  </table>
-                </div>
+                      ━━━━━━━━━━━━━━━
+⚡ *Producation || Quality || Security || HR || Accountant || House Keeping जॉब कोई भी हो, वैकेंसी मिल जाएगी*।
+                </textarea>
+
+
+  <!-- Marathi Copy Button -->
+  <button class="btn btn-outline-success btn-sm"
+          onclick="copyToClipboard('marathiText{{ post.id }}')">
+    <i class="bi bi-clipboard"></i> मराठी
+  </button>
+  <textarea id="marathiText{{ post.id }}"
+            style="display: none; white-space: pre-wrap;">
+📢 *{{ post.company_name }}* – *मध्ये* 𝗝𝗼𝗯 𝗢𝗽𝗲𝗻𝗶𝗻𝗴
+
+*चाकण, रांजणगाव, पुणे, हिंजवाड़ी, भोसरी येथे एक मिनिटात नोकरी — तुमच्या मोबाईलवर आणि लगेच HR ला कॉल करा* | *www.chakanjob.com वर* ||
+
+🔧 𝗣𝗼𝘀𝗶𝘁𝗶𝗼𝗻: *Photographer*
+🎓 *शिक्षण*: *['10th'], (Information Technology Background)*
+💼 *अनुभव*: *3-5 years* ✅
+💰 *पगार*: ₹*15000* – ₹*18000* / महिना
+🧑‍🤝‍🧑 *लिंग*: *female*
+🏢 *सोयी-सुविधा*: *['canteen']* 🍴
+
+ ━━━━━━━━━━━━━━━
+🚀 𝗔𝗽𝗽𝗹𝘆 𝗡𝗼𝘄 किंवा 𝗖𝗮𝗹𝗹 *करा*  
+👉 www.chakanjob.com/post/1/
+
+━━━━━━━━━━━━━━━
+🔎 *पुण्यात सर्वोत्तम नोकरी शोधा*  
+👉 www.chakanjob.com
+
+🔎 *Join Whatsapp Channel* :  
+https://www.whatsapp.com/channel/0029VbBUdgM9RZAWKxY8iM3r  
+
+━━━━━━━━━━━━━━━
+⚡ *Producation || Quality || Security || HR || Accountant || House Keeping नोकरी असो, वैकन्सी मिळेल*। 
+*थेट Google वर chakanjob.com  Search करा*
+  </textarea>
+
+                 <!-- Marathi Button End -->
               </td>
             </tr>
             {% endfor %}

@@ -15,6 +15,8 @@ from django.views import View
 from .models import Post
 from job.models import Applications
 from .decorators import hr_login_required
+from django.shortcuts import render, get_object_or_404, redirect
+
 
 # from django.contrib.auth import update_session_auth_hash
 
@@ -253,7 +255,7 @@ def hr_post_candidate(request):
             min_education = ['10th']
         course_name = request.POST.get('course_name', '').strip()
         if not course_name:
-            course_name = None
+            course_name = "All"
         experience = request.POST.get('experience', 'fresher')
 
         gender = request.POST.get('gender', 'any')  # Default to 'any' if not selected
@@ -402,6 +404,19 @@ def job_applications(request):
 
     return render(request, 'hr/job_applications.html', {'posts': posts, 'applications': applications})
 
+
+
+
+@hr_login_required
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk, hr_user_id=request.session.get('id'))
+    if request.method == "POST":
+        post.delete()
+        messages.success(request, "Post deleted successfully.")
+        return redirect('job_applications')
+    return redirect('job_applications')
+
+
 @hr_login_required
 def success_page(request) :
     return render(request,'hr/success_page.html')
@@ -442,6 +457,39 @@ def success_page(request) :
 #     })
 
 #     return render(request, 'hr/change_password.html')
+
+
+
+
+
+
+
+
+
+@hr_login_required
+def job_applicants(request, post_id):
+    user_id = request.session.get('id')
+    if not user_id:
+        # कोई login नहीं — redirect या empty context
+        return redirect('hr_login')  # या जहाँ चाहें
+
+    # सुनिश्चित करें कि वो HR user का post ही हो
+    try:
+        post = Post.objects.get(id=post_id, hr_user_id=user_id)
+    except Post.DoesNotExist:
+        # ऐसा post नहीं — error page या redirect
+        return HttpResponse("No such job or you are not authorized", status=404)
+
+    # उस post से जुड़े सभी applicants
+    applications = Applications.objects.filter(post=post)
+
+    context = {
+        'post': post,
+        'applications': applications,
+    }
+    return render(request, 'hr/applicants.html', context)
+
+
 class TitleAutocomplete(View):
     def get(self, request):
         query = request.GET.get('term', '')

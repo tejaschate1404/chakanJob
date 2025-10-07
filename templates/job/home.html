@@ -204,12 +204,12 @@ chakanjob.com || Find Job in Chakan, Pune, Bhosari, etc....
             {% for method in post.manage_through %}
               {% if method == 'calls' %}
               <!-- Call Button -->
-              <a href="tel:+91{{ post.calling_number }}" class="btn btn-outline-success w-auto">
+              <a href="tel:+91{{ post.calling_number|stringformat:'s'|slice:'-10:' }}" class="btn btn-outline-success w-auto">
                 <i class="bi bi-telephone"></i> Call
               </a>
                 {% elif method == 'whatsapp' %}
                   <!-- WhatsApp Button -->
-                  <a href="https://wa.me/{{ post.whatsapp_number }}" class="btn btn-outline-success w-auto">
+                  <a href="https://wa.me/91{{ post.whatsapp_number|stringformat:'s'|slice:'-10:' }}?text=Hello%20Sir%2C%20am%20interested%20as%20{{ post.job_title|urlencode }}%20in%20your%20company%20and%20am%20reach%20you%20from%20www.chakanjob.com" class="btn btn-outline-success w-auto">
                     <i class="bi bi-whatsapp"></i> WhatsApp
                   </a>
                 {% elif method == 'email' %}
@@ -251,7 +251,7 @@ chakanjob.com || Find Job in Chakan, Pune, Bhosari, etc....
 
 <!-- end carosel -->
     {% for post in posts reversed %}
-    <div class="card shadow-sm job-card my-4 container">
+    <div class="card shadow-sm job-card my-4 container ">
       <div class="card-body">
         <!-- Top Row -->
         <div class="d-flex align-items-center">
@@ -309,12 +309,12 @@ chakanjob.com || Find Job in Chakan, Pune, Bhosari, etc....
     {% for method in post.manage_through %}
       {% if method == 'calls' %}
       <!-- Call Button -->
-      <a href="tel:+91{{ post.calling_number }}" class="btn btn-outline-success w-auto">
+      <a href="tel:+91{{ post.calling_number|stringformat:'s'|slice:'-10:' }}" class="btn btn-outline-success w-auto">
         <i class="bi bi-telephone"></i> Call
       </a>
         {% elif method == 'whatsapp' %}
           <!-- WhatsApp Button -->
-        <a href="https://wa.me/{{ post.whatsapp_number }}?text=Hello%20Sir%2C%20am%20interested%20as%20{{ job_title }}%20in%20your%20company%20and%20am%20reach%20you%20from%20www.chakanjob.com" class="btn btn-outline-success w-auto">
+        <a href="https://wa.me/91{{ post.whatsapp_number|stringformat:'s'|slice:'-10:' }}?text=Hello%20Sir%2C%20am%20interested%20as%20{{ post.job_title|urlencode }}%20in%20your%20company%20and%20am%20reach%20you%20from%20www.chakanjob.com" class="btn btn-outline-success w-auto">
           <i class="bi bi-whatsapp"></i> WhatsApp
         </a>
         {% elif method == 'email' %}
@@ -358,6 +358,7 @@ chakanjob.com || Find Job in Chakan, Pune, Bhosari, etc....
     {% endfor %}
 
 </div>
+<div class="text-white mb-3"> .</div>
 {% endblock %}
 
 {% block jsScript %}
